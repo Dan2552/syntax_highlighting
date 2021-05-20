@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+def shared_examples_for(*args)
+end
+
+require "bundler/setup"
+require "irb"
+require "syntax_highlighting"
+
+
+SyntaxHighlighting.configure do |config|
+  config.language_files = Dir.glob(
+    Bundler.root.join(
+      "resources",
+      "syntax_highlighting",
+      "**",
+      "*.tmLanguage.json"
+    )
+  )
+  config.theme_file = Bundler.root.join(
+    "resources",
+    "syntax_highlighting",
+    "themes",
+    "ayu-light",
+    "ayu-light.sublime-color-scheme"
+  )
+end
+
+def highlighter
+  @highlighter ||= SyntaxHighlighting::Highlighter.new
+end
+
+puts "Example usage:"
+puts "```"
+puts "highlighter.parse(\"# hello world\", :ruby)"
+puts "```"
+puts ""
+
+IRB.start

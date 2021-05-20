@@ -1,0 +1,51 @@
+GIT
+  remote: https://github.com/Dan2552/mrbrspec
+  revision: bf4f552ce1003528bbcc738f5cf5b37dc2d8505d
+  specs:
+    mrbrspec (0.1.0)
+
+GIT
+  remote: https://github.com/Dan2552/mundler
+  revision: 24067af93b4efeae038e34e71c5160a0ba8eb57c
+  tag: 0.4.0
+  specs:
+    mundler (0.4.0)
+      rake
+      thor (~> 1.1.0)
+
+PATH
+  remote: .
+  specs:
+    syntax_highlighting (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    diff-lcs (1.4.4)
+    rake (13.0.3)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
+    rspec-core (3.10.1)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.10.0)
+    rspec-mocks (3.10.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.10.0)
+    rspec-support (3.10.2)
+    thor (1.1.0)
+
+PLATFORMS
+  -darwin-20
+
+DEPENDENCIES
+  mrbrspec!
+  mundler!
+  rspec
+  syntax_highlighting!
+
+BUNDLED WITH
+   2.2.16

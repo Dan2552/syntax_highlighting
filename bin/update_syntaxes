@@ -1,0 +1,71 @@
+#!/usr/bin/env ruby
+
+def main
+  clone_vscode
+  update_vscode
+  each_syntax_file do |filepath|
+    if mit?(filepath)
+      puts "Copying #{filepath}"
+      copy(filepath)
+    else
+      puts "Skipping #{filepath}"
+    end
+  end
+end
+
+require "fileutils"
+require "pathname"
+require "json"
+
+def clone_vscode
+  return if File.directory?("/tmp/vscode")
+
+  FileUtils.cd("/tmp")
+
+  system("git clone https://github.com/microsoft/vscode") ||
+    raise("git clone failed")
+end
+
+def update_vscode
+  FileUtils.cd("/tmp/vscode")
+  system("git fetch") || raise("failed to git fetch")
+  system("git reset --hard origin/main") || raise("failed to git reset")
+end
+
+def each_syntax_file
+  Dir.glob(File.join("/tmp", "vscode", "**", "*.tmLanguage.json")).each do |filepath|
+    yield filepath
+  end
+end
+
+def mit?(filepath)
+  extension_dir = filepath.split("syntaxes").first
+
+  raise "Unexpected directory structure" unless File.directory?(extension_dir)
+
+  package_json = File.join(extension_dir, "package.json")
+
+  raise "Unexpected directory structure" unless File.file?(package_json)
+
+  package = JSON.parse(File.read(package_json))
+
+  package["publisher"] == "vscode" && package["license"] == "MIT"
+end
+
+def copy(filepath)
+  script_dir = __dir__
+  resources_dir = File.join(script_dir, "..", "resources", "syntax_highlighting")
+  raise "Unexpected directory structure" unless File.directory?(resources_dir)
+
+  extension_dir = filepath.split("/syntaxes").first
+  extension_name = extension_dir.split("/").last
+
+  raise "Unexpected directory structure (extension_name)" unless extension_name.length > 0
+
+  target_dir = File.join(resources_dir, "syntaxes", extension_name)
+  FileUtils.mkdir_p(target_dir)
+
+  FileUtils.cp(filepath, target_dir)
+end
+
+main

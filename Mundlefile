@@ -1,0 +1,9 @@
+# mruby/mruby 0f45836
+
+only_host_platform!
+
+conf.gembox 'default'
+
+conf.gem(Dir.pwd)
+conf.gem(core: "mruby-bin-mruby")
+conf.gem(github: "Dan2552/mruby-irb_like_debugger")
