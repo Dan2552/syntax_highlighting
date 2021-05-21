@@ -18,3 +18,11 @@ RSpec::Matchers.define :inspect_like do |expected|
     actual.inspect.split("\n").map(&:strip).join("\n").strip
   end
 end
+
+def _unwrap(x, covered = [])
+  return if covered.include?(x)
+  covered << x
+  x.patterns.each do |p|
+    _unwrap(p, covered)
+  end
+end

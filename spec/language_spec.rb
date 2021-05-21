@@ -38,14 +38,6 @@ describe SyntaxHighlighting::Language do
     it { is_expected.to be_a(Array) }
     it { is_expected.to all(be_a(SyntaxHighlighting::Pattern)) }
 
-    def _unwrap(x, covered = [])
-      return if covered.include?(x)
-      covered << x
-      x.patterns.each do |p|
-        _unwrap(p, covered)
-      end
-    end
-
     it "all unwraps" do
       expect { _unwrap(described_instance) }
         .to_not raise_error

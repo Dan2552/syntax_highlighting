@@ -17,7 +17,7 @@ module SyntaxHighlighting
         result = repository.get(key)
 
         if result.nil?
-          warn "Could not find #{key} in repository. Available keys: #{repository.keys}"
+          Warnings.warn "Could not find #{key} in repository. Available keys: #{repository.keys}"
           result = new({ "name" => "skipped.skipped.skipped" }, repository)
         end
 
@@ -53,19 +53,19 @@ module SyntaxHighlighting
           @begin = Regexp.new(contents["begin"]) if contents["begin"]
         end
       rescue RegexpError
-        warn "Unhandled regex in language: #{repository.get("$self")&.name || "UNKNOWN"}"
+        Warnings.warn "Unhandled regex in language: #{repository.get("$self")&.name || "UNKNOWN"}"
       end
 
       @end = contents["end"]
       begin
         @begin_captures = Captures.new(contents["beginCaptures"]) if contents["beginCaptures"]
       rescue UnhandledCapturesError
-        warn "Unhandled captures in language: #{repository.get("$self")&.name || "UNKNOWN"}"
+        Warnings.warn "Unhandled captures in language: #{repository.get("$self")&.name || "UNKNOWN"}"
       end
       begin
         @end_captures = Captures.new(contents["endCaptures"]) if contents["endCaptures"]
       rescue UnhandledCapturesError
-        warn "Unhandled captures in language: #{repository.get("$self")&.name || "UNKNOWN"}"
+        Warnings.warn "Unhandled captures in language: #{repository.get("$self")&.name || "UNKNOWN"}"
       end
       @content_name = contents["contentName"]
       @name = contents["name"].to_sym if contents["name"]
@@ -75,7 +75,7 @@ module SyntaxHighlighting
       begin
       @captures = Captures.new(contents["captures"]) if contents["captures"]
       rescue UnhandledCapturesError
-        warn "Unhandled captures in language: #{repository.get("$self")&.name || "UNKNOWN"}"
+        Warnings.warn "Unhandled captures in language: #{repository.get("$self")&.name || "UNKNOWN"}"
       end
 
       begin
@@ -83,11 +83,11 @@ module SyntaxHighlighting
           @match = Regexp.new(contents["match"]) if contents["match"]
         end
       rescue RegexpError
-        warn "Unhandled regex in language: #{repository.get("$self")&.name || "UNKNOWN"}"
+        Warnings.warn "Unhandled regex in language: #{repository.get("$self")&.name || "UNKNOWN"}"
       end
 
       if contents["patterns"] && @match && contents["patterns"].count > 0
-        warn "Unexpected children on match style pattern in language: #{repository.get("$self")&.name || "UNKNOWN"}"
+        Warnings.warn "Unexpected children on match style pattern in language: #{repository.get("$self")&.name || "UNKNOWN"}"
       end
     end
 
