@@ -1,15 +1,9 @@
-class WarningsTest
-  include SyntaxHighlighting::Warnings
-end
-
 describe SyntaxHighlighting::Warnings do
-  let(:described_instance) { WarningsTest.new }
-
-  describe "#silence_warnings" do
+  describe "#silence" do
     it "sets verbose to nil during the yield" do
       yielded = false
       expect($VERBOSE).to_not eq(nil)
-      described_instance.silence_warnings do
+      described_class.silence do
         yielded = true
         expect($VERBOSE).to eq(nil)
       end

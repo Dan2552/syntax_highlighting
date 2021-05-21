@@ -4,8 +4,6 @@ module SyntaxHighlighting
   # A pattern can have children patterns; thereby making a tree structure.
   #
   class Pattern
-    include SyntaxHighlighting::Warnings
-
     # Checks to see if there is an "include" in the pattern:
     # * If there is an "include", the repository is used to use a reusable
     #   pattern.
@@ -51,7 +49,7 @@ module SyntaxHighlighting
       end
 
       begin
-        silence_warnings do
+        Warnings.silence do
           @begin = Regexp.new(contents["begin"]) if contents["begin"]
         end
       rescue RegexpError
@@ -81,7 +79,7 @@ module SyntaxHighlighting
       end
 
       begin
-        silence_warnings do
+        Warnings.silence do
           @match = Regexp.new(contents["match"]) if contents["match"]
         end
       rescue RegexpError

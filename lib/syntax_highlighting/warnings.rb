@@ -1,6 +1,6 @@
 module SyntaxHighlighting
   module Warnings
-    def silence_warnings(&blk)
+    def self.silence(&blk)
       original = $VERBOSE
       $VERBOSE = nil
       blk.call
