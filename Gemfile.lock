@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Dan2552/mrbrspec
-  revision: c6e0983cccf7280a7b337a57b3c042ba1c7a8e1c
+  revision: c2ce4f96259339dc7a78c4eb6bfcfcd6cfb44491
   specs:
     mrbrspec (0.1.0)
 
